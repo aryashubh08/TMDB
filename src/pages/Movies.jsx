@@ -19,6 +19,7 @@ const Movies = () => {
       const { data } = await axios.get(`/movie/${category}?page=${page}`);
       if (data.results.length > 0) {
         setMovies((prev) => [...prev, ...data.results]);
+        setPage(page + 1);
       } else {
         setHasMore(false);
       }
@@ -27,11 +28,19 @@ const Movies = () => {
     }
   };
 
+  const refreshHandler = () => {
+    if (movies.length === 0) {
+      getMovies();
+    } else {
+      setPage(1);
+      setMovies([]);
+      // getMovies();
+    }
+  };
+
   // Reset movies when category changes
   useEffect(() => {
-    setMovies([]);
-    setPage(1);
-    setHasMore(true);
+    refreshHandler();
   }, [category]);
 
   // Fetch movies whenever page or category changes
@@ -65,7 +74,7 @@ const Movies = () => {
       {/* INFINITE SCROLL */}
       <InfiniteScroll
         dataLength={movies.length}
-        next={movies}
+        next={getMovies}
         hasMore={hasMore}
         loader={<h4 className="text-center py-4">Loading...</h4>}
       >
