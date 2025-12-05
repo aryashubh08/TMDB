@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import HorizontalCards from "../components/HorizontalCards";
 import Dropdown from "../components/Dropdown";
 import { GoArrowLeft } from "react-icons/go";
+import Loading from "../components/Loading";
 
 const PeopleDetails = () => {
   const [category, setCategory] = useState("movie");
@@ -18,10 +19,7 @@ const PeopleDetails = () => {
     return () => dispatch(removePeople());
   }, [id]);
 
-  if (!info)
-    return (
-      <p className="text-center text-zinc-400 mt-10 text-lg">Loading...</p>
-    );
+  if (!info) return <Loading />;
 
   return (
     <div className="min-h-screen w-full bg-[#0F0F0F] text-zinc-300 pb-16">

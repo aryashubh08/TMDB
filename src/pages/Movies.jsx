@@ -5,6 +5,7 @@ import { GoArrowLeft } from "react-icons/go";
 import Dropdown from "../components/Dropdown";
 import Cards from "../components/Cards";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Loading from "../components/Loading";
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -48,7 +49,7 @@ const Movies = () => {
     getMovies();
   }, [page, category]);
 
-  return (
+  return movies.length > 0 ? (
     <div className="w-full min-h-screen overflow-x-hidden">
       {/* HEADER */}
       <div className="w-full p-2 sm:px-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
@@ -81,6 +82,8 @@ const Movies = () => {
         <Cards trending={movies} title="movie" />
       </InfiniteScroll>
     </div>
+  ) : (
+    <Loading />
   );
 };
 

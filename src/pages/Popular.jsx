@@ -5,6 +5,7 @@ import { GoArrowLeft } from "react-icons/go";
 import Dropdown from "../components/Dropdown";
 import Cards from "../components/Cards";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Loading from "../components/Loading";
 
 const Popular = () => {
   const [popular, setPopular] = useState([]);
@@ -47,38 +48,38 @@ const Popular = () => {
     getPopular();
   }, [page, category]); // Fetch whenever page changes
 
-  return (
-    popular.length > 0 && (
-      <div className="w-full min-h-screen overflow-x-hidden">
-        {/* HEADER */}
-        <div className="w-full p-2 sm:px-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-          <div className="flex items-center gap-3 min-w-max">
-            <GoArrowLeft
-              className="cursor-pointer text-2xl"
-              onClick={() => navigate(-1)}
-            />
-            <h1 className="text-xl font-semibold">Popular</h1>
-          </div>
-
-          <div className="flex items-center gap-3 min-w-max">
-            <Dropdown
-              title="Category"
-              options={["movie", "tv"]}
-              category={(e) => setCategory(e.target.value)}
-            />
-          </div>
+  return popular.length > 0 ? (
+    <div className="w-full min-h-screen overflow-x-hidden">
+      {/* HEADER */}
+      <div className="w-full p-2 sm:px-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+        <div className="flex items-center gap-3 min-w-max">
+          <GoArrowLeft
+            className="cursor-pointer text-2xl"
+            onClick={() => navigate(-1)}
+          />
+          <h1 className="text-xl font-semibold">Popular</h1>
         </div>
-        <InfiniteScroll
-          dataLength={popular.length}
-          next={getPopular}
-          hasMore={hasMore}
-          loader={<h4>Loading...</h4>}
-        >
-          {/* CARDS */}
-          <Cards trending={popular} title={category} />
-        </InfiniteScroll>
+
+        <div className="flex items-center gap-3 min-w-max">
+          <Dropdown
+            title="Category"
+            options={["movie", "tv"]}
+            category={(e) => setCategory(e.target.value)}
+          />
+        </div>
       </div>
-    )
+      <InfiniteScroll
+        dataLength={popular.length}
+        next={getPopular}
+        hasMore={hasMore}
+        loader={<h4>Loading...</h4>}
+      >
+        {/* CARDS */}
+        <Cards trending={popular} title={category} />
+      </InfiniteScroll>
+    </div>
+  ) : (
+    <Loading />
   );
 };
 

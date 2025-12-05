@@ -14,6 +14,7 @@ import { FaFirefoxBrowser } from "react-icons/fa";
 import { SiImdb } from "react-icons/si";
 import { FaPlay } from "react-icons/fa";
 import HorizontalCards from "../components/HorizontalCards";
+import Loading from "../components/Loading";
 
 function TvDetails() {
   const { pathname } = useLocation();
@@ -175,7 +176,7 @@ function TvDetails() {
       <Outlet />
     </div>
   ) : (
-    <p className="text-center text-white">Loading...</p>
+    <Loading />
   );
 }
 
